@@ -11,7 +11,45 @@
       </div>
     </el-header>
     <el-container>
-      <el-aside width="200px">Aside</el-aside>
+      <el-aside width="200px">
+        <el-col>
+          <el-menu
+            default-active="2"
+            class="el-menu-vertical-demo"
+            @open="handleOpen"
+            @close="handleClose"
+            background-color="#545c64"
+            text-color="#fff"
+            active-text-color="#ffd04b"
+            unique-opened
+          >
+            <el-submenu index="1">
+              <template slot="title">
+                <i class="el-icon-location"></i>
+                <span>用户管理</span>
+              </template>
+              <el-menu-item index="1-1">
+                <i class="el-icon-menu"></i>
+                <span slot="title">用户列表</span>
+              </el-menu-item>
+            </el-submenu>
+            <el-submenu index="2">
+              <template slot="title">
+                <i class="el-icon-location"></i>
+                <span>权限管理</span>
+              </template>
+              <el-menu-item index="2-1">
+                <i class="el-icon-menu"></i>
+                <span slot="title">角色列表</span>
+              </el-menu-item>
+                            <el-menu-item index="2-2">
+                <i class="el-icon-menu"></i>
+                <span slot="title">权限列表</span>
+              </el-menu-item>
+            </el-submenu>
+          </el-menu>
+        </el-col>
+      </el-aside>
       <el-main>Main</el-main>
     </el-container>
   </el-container>
@@ -25,16 +63,24 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(() => {
-        localStorage.removeItem('token')
-        this.$router.push('/login')
-        this.$message.success('退出成功')
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        })
       })
+        .then(() => {
+          localStorage.removeItem('token')
+          this.$router.push('/login')
+          this.$message.success('退出成功')
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
+    },
+    handleOpen(key, keyPath) {
+      console.log(key, keyPath)
+    },
+    handleClose(key, keyPath) {
+      console.log(key, keyPath)
     }
   }
 }
@@ -48,7 +94,7 @@ export default {
     display: flex;
     .log {
       width: 180px;
-      background-image: url("~@/assets/logo.png");
+      background-image: url('~@/assets/logo.png');
       background-size: contain;
       background-repeat: no-repeat;
     }
@@ -74,6 +120,9 @@ export default {
   }
   .el-aside {
     background-color: #545c64;
+    .el-submenu {
+      width: 200px;
+    }
   }
   .el-main {
     background-color: #d4dfe4;
